@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_dvdswfswkwn.css">
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "person/css/index.css" %}">
+    <link rel="stylesheet" href="{% static "person/css/styles.css" %}">
+    <script src="{% static "blogs/js/jquery-3.2.1.js" %}"></script>
+    <script src="{% static "person/js/jQuery-2.2.4.min.js" %}"></script>
+    <script src="{% static "person/js/xs.js" %}"></script>
+    <style>
+        .xs_ul { width:1072px; margin:100px auto 0; font-size:0; line-height:0; }
+    .xs_ul li { display:inline-block; font-size:20px; line-height:20px; background:#fff; margin:20px; }
+    .xs_ul li a { display:block; width:76px; text-align:center; padding:15px 30px; border:1px solid #000; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="con">
+            <a href="{% url 'blogs:index'%}">
+                <img src="{% static "blogs/img/boke.svg" %}" alt="" class="logo">
+            </a>
+            <div class="login-box">
+                {% if not email %}
+                    <a href="{% url 'verify:login'%}" class="item-text" style="text-decoration: none;color: #333">登录</a> /
+                    <a href="{% url 'verify:register' %}" class="item-text" style="text-decoration: none;color: #333">注册</a>
+                    {% else %}
+                    <span style="color: gold;">
+                        <i class="iconfont icon-celebration_party-cr" style="font-size: 22px"></i>
+                    </span>
+                    <a href="" style="text-decoration: none;margin: 0 10px 0 5px">{{ obj.username }}</a>
+                    <a href="{% url 'verify:secede' %}" style="text-decoration: none;color: green">
+                        <i class="iconfont icon-yyexit" style="font-size: 22px;color: green;font-weight: 600"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <ul class="cards" style="margin-top: 100px">
+	  <li class="title">
+		<h2 id="open">我的文章</h2>
+	  </li>
+	  <li class="card card-1"><img src="{% static "person/img/01.jpg" %}">
+		<div class="content xs_li_07">
+		  <h3>关于我</h3>
+		  <p>About Me</p>
+		</div>
+	  </li>
+	  <li class="card card-2">
+          <a href="{% url "person:myArticle" %}">
+              <img src="{% static "person/img/02.jpg" %}">
+          </a>
+		<div class="content xs_li_07">
+		  <h3>我的文章</h3>
+		  <p>My Article</p>
+		</div>
+	  </li>
+	  <li class="card card-3">
+          <a href="{% url "person:addArticle" %}">
+              <img src="{% static "person/img/03.jpg" %}">
+          </a>
+		<div class="content xs_li_07">
+		  <h3>写论文</h3>
+		  <p>Start a Blog</p>
+		</div>
+	  </li>
+    </ul>
+    <hr/>
+	<ul class="card-stacks">
+	  <li class="title">
+		<h2 id="nine">个人中心</h2>
+	  </li>
+	  <li class="stack stack-1">
+		<ul class="cards-down">
+		  <li class="card card-1"><img src="{% static 'person/img/04.jpg' %}">
+			<div class="content">
+			  <h3>待开发3,1</h3>
+			  <p>Stack 1</p>
+			</div>
+		  </li>
+		  <li class="card card-2"><img src="{% static 'person/img/05.jpg' %}">
+			<div class="content xs_li_08">
+			  <h3>时间轴</h3>
+			  <p>TimeLine</p>
+			</div>
+		  </li>
+		  <li class="card card-3">
+              <a href="{% url "person:pim" %}" style="display: block">
+                  <img src="{% static 'person/img/06.jpg' %}">
+              </a>
+			<div class="content xs_li_07">
+			  <h3>个人资料管理</h3>
+			  <p>Personal Info Managers</p>
+			</div>
+		  </li>
+		</ul>
+	  </li>
+	  <li class="stack stack-2">
+		<ul class="cards-down">
+		  <li class="card card-1"><img src="{% static 'person/img/07.jpg' %}">
+			<div class="content">
+			  <h3>待开发3,2</h3>
+			  <p>Stack 2</p>
+			</div>
+		  </li>
+		  <li class="card card-2"><img src="{% static 'person/img/08.jpg' %}">
+			<div class="content xs_li_08">
+			  <h3>我的粉丝</h3>
+			  <p>My Follower</p>
+			</div>
+		  </li>
+		  <li class="card card-3"><img src="{% static 'person/img/01.jpg' %}">
+			<div class="content xs_li_07">
+			  <h3>评论留言</h3>
+			  <p>Comment & Message</p>
+			</div>
+		  </li>
+		</ul>
+	  </li>
+	  <li class="stack stack-3">
+		<ul class="cards-down">
+		  <li class="card card-1"><img src="{% static 'person/img/06.jpg' %}">
+			<div class="content">
+			  <h3>待开发3,3</h3>
+			  <p>Stack 3</p>
+			</div>
+		  </li>
+		  <li class="card card-2">
+              <a href="{% url 'person:manageArticle' %}">
+                 <img src="{% static 'person/img/07.jpg' %}">
+              </a>
+			<div class="content">
+			  <h3>文章管理</h3>
+			  <p>Article Manage</p>
+			</div>
+		  </li>
+		  <li class="card card-3"><img src="{% static 'person/img/08.jpg' %}">
+			<div class="content xs_li_07">
+			  <h3>我的关注</h3>
+			  <p>My Interest</p>
+			</div>
+		  </li>
+		</ul>
+	  </li>
+	</ul>
+	<hr/>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+        $('#open').on('click',function () {
+            $('ul.cards').toggleClass('transition')
+        })
+        $('#nine').on('click',function () {
+            $('ul.card-stacks').toggleClass('transition')
+        })
+        });
+    </script>
+    <script type="text/javascript">
+            $(document).ready(function() {
+            $(".xs_li_01").xs999(1);
+            $(".xs_li_02").xs999(2);
+            $(".xs_li_03").xs999(3);
+            $(".xs_li_04").xs999(4);
+            $(".xs_li_05").xs999(5);
+            $(".xs_li_06").xs999(6);
+            $(".xs_li_07").xs999(7);
+            $(".xs_li_08").xs999(8);
+            $(".xs_li_09").xs999(9);
+            $(".xs_li_10").xs999(10);
+            $(".xs_li_11").xs999(11);
+            $(".xs_li_12").xs999(12);
+            $(".xs_li_13").xs999(13);
+            $(".xs_li_14").xs999(14);
+            $(".xs_li_15").xs999(15);
+            $(".xs_li_16").xs999(16);
+            $(".xs_li_17").xs999(17);
+            $(".xs_li_18").xs999(18);
+            $(".xs_li_19").xs999(19);
+            $(".xs_li_20").xs999(20);
+            $(".xs_li_21").xs999(21);
+            $(".xs_li_22").xs999(22);
+            $(".xs_li_23").xs999(23);
+            $(".xs_li_24").xs999(24,{color:'#6ce'});
+            $(".xs_li_25").xs999(25);
+            $(".xs_li_26").xs999(26);
+            $(".xs_li_27").xs999(27);
+            $(".xs_li_28").xs999(28);
+            $(".xs_li_29").xs999(29);
+            $(".xs_li_30").xs999(30);
+	        });
+    </script>
+    <div class="footer-wrap-box">
+        <div class="footer-wrap">
+            <span>Design by：雨中人</span>
+            <span>
+                <strong style="font-weight: 500;margin-left: 7px">晋ICP备18012996号-2</strong>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

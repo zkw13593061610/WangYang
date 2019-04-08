@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_dvdswfswkwn.css">
+    <link rel="stylesheet" href="{% static 'person/css/addArticle.css' %}">
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+    <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+</head>
+<body>
+    <div class="all">
+        <a href="{% url 'person:index' %}">
+            <i class="iconfont icon-fanhui"></i>
+        </a>
+
+        <form action="" method="post" class="from-box">
+            {% csrf_token %}
+            <div class="title">
+                <label for="" class="username-label">
+                    <span class="label">
+                        <span class="tip">*</span>
+                        文章标题
+                    </span>
+                    <input type="text" name="title" class="username" maxlength="22">
+                </label>
+            </div>
+            <div class="msg">
+                <label for="" class="username-label" style="margin-right: 55px">
+                    <span class="label">
+                        <span class="tip">*</span>
+                        文章类型
+                    </span>
+                    <select name="types" id="" class="selects">
+                        <option value="">---------------------</option>
+                        {% for item in types %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label for="" class="username-label">
+                    <span class="label">
+                        <span class="tip">*</span>
+                        文章关键字
+                    </span>
+                    <select name="keys" id="" class="selects">
+                        <option value="">---------------------</option>
+                        {% for item in keys %}
+                            <option value="{{ item.id }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+            <label for="" class="username-label">
+                <span class="label">
+                    <span class="tip">*</span>
+                    文章内容
+                </span>
+                <textarea name="con" class="ckeditor" id="" style="margin-left: 50px"></textarea>
+            </label>
+            <label for="" class="username-label">
+                <input type="submit" value="发布" class="push">
+                <input type="reset" value="清空" class="clean">
+            </label>
+        </form>
+    </div>
+</body>
+</html>

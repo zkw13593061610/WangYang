@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_jz4e7dq4kwg.css">
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "person/css/manageArticle.css" %}">
+    <link rel="stylesheet" href="{% static "person/css/style.css" %}">
+    <link rel="stylesheet" href="{% static "person/css/normalize.css" %}">
+    <script src="{% static "blogs/js/jquery-3.2.1.js" %}"></script>
+    <script src="{% static "person/js/xs.js" %}"></script>
+    <script src="{% static "person/js/index.js" %}"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="con">
+            <li><h3 style="color: #19be6b">个人文章管理</h3></li>
+            <li><i class="iconfont icon-dingwei"></i></li>
+            <li><a href="{% url 'person:index' %}" style="color: #fff"><span>个人中心</span></a></li>
+            <li><i class="iconfont icon-12"></i></li>
+            <li><span>文章管理</span></li>
+        </div>
+    </div>
+    <main>
+        <div class="con">
+            <div class="controls">
+                <label for="choiceAll">
+                   <input type="radio" id="choiceAll" name="all">
+                    <span>全选</span>
+                </label>
+                <label for="notChoiceAll">
+                   <input type="radio" id="notChoiceAll" name="all">
+                    <span>取消全选</span>
+                </label>
+                <label for="notChoice">
+                   <input type="radio" id="notChoice" name="all">
+                    <span>取消选定</span>
+                </label>
+                <label for="InvertChoice">
+                   <input type="radio" id="InvertChoice" name="all">
+                    <span>反选</span>
+                </label>
+            </div>
+            <div class="showAll">
+                {% for item in article %}
+                    <li class='tg-list-item'>
+                        <input class='tgl tgl-ios' id='{{ item.id }}' type='checkbox'>
+                        <label class='tgl-btn' for='{{ item.id }}'></label>
+                        <a href="{% url 'person:showArticle' item.id %}">
+                            <h4 style="color: #333;margin-left: 20px">
+                                <i class="iconfont icon-huabian1" style="font-size: 24px;margin-right: 10px"></i>
+                                {{ item.title }}
+                                <i class="iconfont icon-huabian" style="font-size: 24px;margin-left: 10px"></i>
+                            </h4>
+                        </a>
+                        <h5 style="color: #333;margin-left: 20px">{{ item.u_time }}</h5>
+                    </li>
+                {% endfor %}
+                <div class="delChoice">
+                    <i class="iconfont icon-shanchu1"></i>
+                    <span id="del" style="cursor: pointer">删除已勾选的文章</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+<script>
+    $("#choiceAll").click(function () {
+        console.log($(".tg-list-item").find('input'))
+        $(".tg-list-item").find('input').prop('checked',true)
+
+    })
+    $("#notChoiceAll").click(function () {
+        $(".tg-list-item").find('input').prop('checked',false)
+
+    })
+    $("#notChoice").click(function () {
+        for(var i=0;i<($(".tg-list-item").find('input').length);i++){
+            if($(".tg-list-item").find('input').eq(i).prop('checked')){
+                $(".tg-list-item").find('input').eq(i).prop('checked',false)
+            }
+        }
+    })
+    $("#InvertChoice").click(function () {
+        for(var i=0;i<($(".tg-list-item").find('input').length);i++){
+            if ($(".tg-list-item").find('input').eq(i).prop('checked')){
+                $(".tg-list-item").find('input').eq(i).prop('checked',false)
+            }else {
+                $(".tg-list-item").find('input').eq(i).prop('checked',true)
+            }
+        }
+    })
+    $("#del").click(function () {
+        var del_arr = []
+        for(var i=0;i<($(".tg-list-item").find('input').length);i++){
+            if($(".tg-list-item").find('input').eq(i).prop('checked')){
+                del_arr.push(parseInt($(".tg-list-item").find('input').eq(i).attr('id')))
+            }
+        }
+        $.ajaxSetup({data: {csrfmiddlewaretoken: '{{ csrf_token }}'}});
+        $.ajax({
+            url: "{% url 'person:manageArticle' %}",
+            type: "post",
+            dataType:'json',
+            traditional: true,//这里设置为true
+            data: {'del_arr':del_arr},
+            success:function (e) {
+                if(e.status=='ok'){
+                    window.location.reload()
+                    console.log(del_arr)
+                }
+            }
+        })
+    })
+</script>

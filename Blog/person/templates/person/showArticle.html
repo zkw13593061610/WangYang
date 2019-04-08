@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "person/css/showArticle.css" %}">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_dvdswfswkwn.css">
+    <script src="{% static "person/js/jQuery-2.2.4.min.js" %}"></script>
+    <style>
+        .icon-fanhui{
+            font-size: 45px;
+            position: absolute;
+            left: 160px;
+            top: 50px;
+        }
+        .comment{
+            width: 870px;
+            height: auto;
+            padding-bottom: 50px;
+            margin: 20px auto 0;
+            background: #fff;
+        }
+        .comment h3{
+            padding: 15px 0;
+            overflow: hidden;
+        }
+        .comments-textarea{
+            width: 100%;
+            position: relative;
+            height: 150px;
+            {#border: 1px solid #ccc;#}
+            border-radius: 5px;
+        }
+        .textarea{
+            width: 87%;
+            margin: 10px 1.5% 0;
+            height: 95px;
+            font-size: 14px;
+            border-radius: 5px;
+            {#border: none;#}
+            color: #333;
+            outline: none;
+        }
+        textarea{
+            resize: none;
+            overflow: auto;
+        }
+        .comment-card{
+            width: 100%;
+            height: auto;
+            border-top: 1px solid #ccc;
+        }
+        .comment-card li{
+            width: 90%;
+            height: auto;
+            border-bottom: 1px solid #ccc;
+            padding: 5px 0;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .comment-card li em{
+            font-style: normal;
+            margin-left: 430px;
+        }
+        .comment-card li p{
+            padding: 10px 20px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-wrap-box">
+        <a href="{% url 'person:myArticle' %}">
+            <i class="iconfont icon-fanhui"></i>
+        </a>
+        <div class="main-content-box">
+            <h1 class="title-h1">
+ 				{{ article.title }}
+            </h1>
+            <div class="detail-info-box">
+                <ul class="clearfix">
+                    <li class="item-time">
+	               		编辑时间：
+	               		<span class="date-time">{{ article.u_time }}</span>
+                    </li>
+                    <li id="Browse">
+	               		浏览量:
+                        <span id="countnum">666</span>
+                    </li>
+                    <li id="Browse">
+	               		作者:
+                        <span id="author">{{ uName.username }}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <p>
+                    <br>
+                </p>
+                <p>
+                    {{ article.con | safe }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <ul>
+            <li>
+                <a href="{% url "person:showArticle" last_article.id %}">上一篇:</a><span style="margin-left: 20px;cursor: pointer" id="last">{{ last_article.title }}</span>
+            </li>
+            <li>
+                <a href="{% url "person:showArticle" next_article.id %}">下一篇:</a><span style="margin-left: 20px;cursor: pointer" id="next">{{ next_article.title }}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="comment">
+        <h3>留言展示:</h3>
+        <ul class="comment-card">
+            {% for item in pl %}
+                <li>
+                    <span><i class="iconfont icon-yonghu" style="margin-right: 5px"></i>{{ item.users_id }}</span>
+                    <em><i class="iconfont icon-shijian" style="margin-right: 5px"></i>{{ item.c_time }}</em>
+                    <p>
+                        {{ item.con }}
+                    </p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

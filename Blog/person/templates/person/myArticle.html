@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_dvdswfswkwn.css">
+    <link rel="stylesheet" href="{% static "person/css/myArticle.css" %}">
+    <style>
+        .icon-fanhui{
+            font-size: 55px;
+            position: absolute;
+            left: 150px;
+            top: 0;
+        }
+        .pagination{
+            width: 860px;
+            height: 60px;
+            background: #fff;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .step-links{
+            width: 35%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .pre{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #19be6b;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .nex{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #05A6F0;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .index{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #05A6F0;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .last{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #19be6b;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .tips{
+            width: 100%;
+            height: 400px;
+        }
+        .icon-niao{
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="clearfix">
+        <a href="{% url 'person:index' %}">
+            <i class="iconfont icon-fanhui"></i>
+        </a>
+        <div class="article-list">
+            {% if not contacts %}
+                <div class="tips">
+                    <ul>
+                        <i class="iconfont icon-niao"></i>
+                        <i class="iconfont icon-niao"></i>
+                        <i class="iconfont icon-niao"></i>
+                        <i class="iconfont icon-niao"></i>
+                        <i class="iconfont icon-niao"></i>
+                        <i>...........</i>
+                        <span>你还没写过文章呢!</span>
+                    </ul>
+                    <a href="{% url "person:addArticle" %}">快去写点东西吧</a>
+                </div>
+            {% endif %}
+            {% for item in contacts %}
+
+                <li class="article-item">
+                    <div class="news-img-box">
+                        <a href="{% url 'person:showArticle' item.id %}">
+                            <img src="/media{{ uName.img }}" alt="">
+                        </a>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="title-h3">
+                            <a href="{% url 'person:showArticle' item.id %}">{{ item.title }}</a>
+                        </h3>
+                        <div class="author-info">
+                            <p class="author">
+                                <a href="">
+                                   <img src="/media{{ uName.img }}" alt="">
+                                    <span>{{ uName.username }}</span>
+                                </a>
+                            </p>
+                            <span class="date-time">
+                                发布时间：
+                                <em>{{ item.c_time }}</em>
+                            </span>
+                            <span class="classify">
+                                分类：
+                                <a href="">{{ item.c }}</a>
+                            </span>
+
+                        </div>
+                        <p class="news-info">{{ item.con | striptags | slice:':86'}}...</p>
+                    </div>
+                </li>
+
+            {% endfor %}
+        </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if contacts.has_previous %}
+                    <a href="?page=1" class="index">首页</a>
+                    <a href="?page={{ contacts.previous_page_number }}" class="pre">上一页</a>
+                {% endif %}
+
+                <span class="current">
+                    <i class="iconfont icon-dingwei"></i>第{{ contacts.number }}页   总计: {{ contacts.paginator.num_pages }}页
+                </span>
+
+                {% if contacts.has_next %}
+                    <a href="?page={{ contacts.next_page_number }}" class="nex">下一页</a>
+                    <a href="?page={{ contacts.paginator.num_pages }}" class="last">尾页</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</body>
+</html>

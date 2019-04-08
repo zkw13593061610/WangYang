@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_dvdswfswkwn.css">
+    <link rel="stylesheet" href="{% static "verify/css/home.css" %}">
+    <script src="{% static "verify/js/jquery-3.2.1.js" %}"></script>
+    <link rel="stylesheet" href="{% static "verify/css/style.css" %}">
+    <style>
+        #id_captcha_1{
+            display: block;
+            width: 120px;
+            margin-top: 5px;
+            padding: 7px 20px 7px 34px;
+            line-height: 1.5;
+            font-size: 13px;
+            border: 1px solid #dcdee2;
+            border-radius: 4px;
+            color: #515a6e;
+            {#background-color: #fff;#}
+            {#background-image: none;#}
+            background-size: 100% 100%;
+            position: relative;
+            cursor: text;
+            float: right;
+        }
+        .icon-yanzhengma1{
+            position: absolute;
+            left: 165px;
+            top: 12px;
+            font-size: 21px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="zhegai">
+        <div class="dialog">
+            <div class="dialog-body">
+                <div class="login-wrap-box">
+                    <div class="content-box">
+                        <h2 class="title">
+                            登录个人博客
+                            <i class="iconfont icon-guanbi1" style="float: right;color: #9D9D9D;font-size: 14px"></i>
+                        </h2>
+                        <form action="" class="from-box" method="post">
+                            {% csrf_token %}
+                            <label for="" class="username-label">
+                                <i class="iconfont icon-xinfeng2"></i>
+                                <span class="label">
+                                    <span class="tip">*</span>
+                                    电子邮箱
+                                </span>
+                                {{ form.email }}
+                            </label>
+                            <label for="" class="username-label">
+                                <i class="iconfont icon-lock"></i>
+                                <span class="label">
+                                    <span class="tip">*</span>
+                                    密码
+                                </span>
+                                {{ form.password }}
+                            </label>
+                            <label for="" class="username-label">
+                                <i class="iconfont icon-yanzhengma1"></i>
+                                <span class="label">
+                                    <span class="tip">*</span>
+                                    验证码
+                                </span>
+                                {{ form.captcha }}
+                            </label>
+                            <div class="btn-box">
+                                <button class="request-btn">登录</button>
+                                <div class="info">
+                                    <p class="info-item" style="float: left">
+                                        没有账户?
+                                        <a href="{% url 'verify:register' %}" class="btn">注册</a>
+                                    </p>
+                                    <p class="btn" style="float: right;color: #2a8bec;
+        cursor: pointer;">忘记密码</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static "verify/js/three.min.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "verify/js/dat.gui.min.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "verify/js/Stats.min.js" %}"></script>
+
+    <div id="Stats-output"></div>
+
+    <div id="WebGL-output"></div>
+
+    <script src='{% static "verify/js/jquery.min.js" %}'></script>
+
+    <script src="{% static "verify/js/index.js" %}"></script>
+</body>
+</html>
+<script>
+    $('.captcha').click(function () {
+        $.ajax({
+            url: '/captcha/refresh/',
+            type: 'post',
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success:function (e) {
+                console.log(e)
+                $('.captcha').attr('src',e['image_url'])
+                $('#id_yzm_0').val(e['key'])
+            }
+        })
+    })
+</script>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人博客平台</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "blogs/css/blog_show.css" %}">
+    <script src="{% static "blogs/js/jquery-3.2.1.js" %}"></script>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_dvdswfswkwn.css">
+    <style>
+        .footer{
+            width: 1180px;
+            height: 50px;
+            {#padding: 50px 0 15px 30px;#}
+            background: #fff;
+        }
+        .footer ul{
+            width: 95%;
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .footer ul a{
+            text-decoration: none;
+        }
+        .icon-fanhui{
+            font-size: 45px;
+            position: absolute;
+            left: 110px;
+            top: 110px;
+        }
+        .comment{
+            width: 1150px;
+            height: auto;
+            {#padding: 15px 0 15px 30px;#}
+            padding: 30px 0 30px 30px;
+            overflow-x: hidden;
+            background: #fff;
+        }
+        .comments-textarea{
+            width: 100%;
+            position: relative;
+            height: 150px;
+            {#border: 1px solid #ccc;#}
+            border-radius: 5px;
+        }
+        .textarea{
+            width: 80%;
+            {#margin: 10px 1.5% 0;#}
+            height: 95px;
+            font-size: 14px;
+            border-radius: 5px;
+            {#border: none;#}
+            color: #333;
+            outline: none;
+        }
+        textarea{
+            resize: none;
+            overflow: auto;
+        }
+        .btn{
+            width: 120px;
+            height: 40px;
+            background: #ccc;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+        }
+        .comment-card{
+            width: 100%;
+            height: auto;
+            margin-top: 25px;
+            border-top: 1px solid #ccc;
+        }
+        .comment-card li{
+            width: 90%;
+            height: auto;
+            border-bottom: 1px solid #ccc;
+            padding: 5px 0;
+            overflow: hidden;
+        }
+        .comment-card li em{
+            font-style: normal;
+            margin-left: 430px;
+        }
+        .comment-card li p{
+            padding: 10px 20px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="con">
+            <a href="{% url 'blogs:index'%}">
+               <img src="{% static "blogs/img/boke.svg" %}" alt="" class="logo">
+            </a>
+            <div class="nav-wrap">
+                <li class="nav-item">
+                    <a href="{% url 'blogs:index'%}" style="text-decoration: none;color: #ef4868">首页</a>
+                </li>
+{#                <li class="nav-item">#}
+{#                    <a href="" style="text-decoration: none">心路历程</a>#}
+{#                </li>#}
+                <li class="nav-item">
+                    <a href="{% url 'blogs:my_blog'%}" style="text-decoration: none;">优秀博文</a>
+                </li>
+                <li class="nav-item" style="text-decoration: none">
+                    <a href="" style="text-decoration: none">留言板</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" style="text-decoration: none">关于</a>
+                </li>
+            </div>
+            <div class="login-box">
+                {% if not email %}
+                    <a href="{% url 'verify:login'%}" class="item-text" style="text-decoration: none;color: #333">登录</a> /
+                    <a href="{% url 'verify:register' %}" class="item-text" style="text-decoration: none;color: #333">注册</a>
+                    {% else %}
+                    <span style="color: gold;">
+                        <i class="iconfont icon-celebration_party-cr" style="font-size: 22px"></i>
+                    </span><a href="" style="text-decoration: none;margin: 0 10px 0 5px">{{ email }}</a>
+                    <a href="{% url 'verify:secede' %}" style="text-decoration: none;color: green">
+                        <i class="iconfont icon-yyexit" style="font-size: 22px;color: green;font-weight: 600"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="detail-wrap-box">
+        <a href="{% url 'blogs:index' %}">
+            <i class="iconfont icon-fanhui"></i>
+        </a>
+        <div class="main-content-box">
+            <h1 class="title-h1">
+                {{ article.title }}
+            </h1>
+            <div class="detail-info-box">
+                <ul class="clearfix">
+                    <li class="item-time">
+                        编辑时间：
+                        <span class="date-time">{{ article.u_time }}</span>
+                    </li>
+                    <li id="Browse">
+                        浏览量:
+                        <span id="countnum">666</span>
+                    </li>
+                    <li id="Browse">
+                        作者:
+                        <span id="author">{{ article.a }}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <p>
+                    <br>
+                </p>
+                <p>
+                    {{ article.con | safe }}
+                </p>
+            </div>
+        </div>
+        <div class="footer">
+            <ul>
+                <li>
+                    <a href="{% url "blogs:PT_blog_show" last_article.id %}">上一篇:<span style="margin-left: 20px;cursor: pointer" id="last">{{ last_article.title }}</span></a>
+                </li>
+                <li>
+                    <a href="{% url "blogs:PT_blog_show" next_article.id %}">下一篇:<span style="margin-left: 20px;cursor: pointer" id="next">{{ next_article.title }}</span></a>
+                </li>
+            </ul>
+        </div>
+{#        <div class="comment">#}
+{#            <h3>评论留言区</h3>#}
+{#            <form action="" method="post">#}
+{#                <div class="comments-textarea">#}
+{#                    <textarea name="" id="txt" class="textarea" placeholder="有什么要对作者说的话"></textarea>#}
+{#                </div>#}
+{#                <div class="btn">#}
+{#                    <span>发表评论</span>#}
+{#                </div>#}
+{#            </form>#}
+{#            <ul class="comment-card">#}
+{#                {% for item in pl %}#}
+{#                    <li>#}
+{#                        <span><i class="iconfont icon-yonghu" style="margin-right: 5px"></i>{{ item.users_id }}</span>#}
+{#                        <em><i class="iconfont icon-shijian" style="margin-right: 5px"></i>{{ item.c_time }}</em>#}
+{#                        <p>#}
+{#                            {{ item.con }}#}
+{#                        </p>#}
+{#                    </li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+    </div>
+    <div class="footer-wrap-box">
+        <div class="footer-wrap">
+            <span>Design by：雨中人</span>
+            <span>
+                <strong style="font-weight: 500;margin-left: 7px">晋ICP备18012996号-2</strong>
+            </span>
+        </div>
+    </div>
+</body>
+</html>
+{#<script>#}
+{#    $('.btn').click(function () {#}
+{#        $.ajaxSetup({data: {csrfmiddlewaretoken: '{{ csrf_token }}'}});#}
+{#        $.ajax({#}
+{#            url: "{% url 'blogs:blog_show' item_id %}",#}
+{#            type: 'post',#}
+{#            data:{'con':$('#txt').val()},#}
+{#            success:function (e) {#}
+{#                if (e.statue == 'ok'){#}
+{#                    $('#txt').val('')#}
+{#                    alert('评论发表成功了')#}
+{#                    location.href = "http://127.0.0.1:8000/blog_show/"+{{ item_id }};#}
+{#                }#}
+{#            }#}
+{#        })#}
+{#    })#}
+{#</script>#}

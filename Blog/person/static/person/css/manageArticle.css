@@ -1,0 +1,88 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+body{
+    width: 100%;
+    font-family: PingFang SC,Helvetica Neue,Helvetica,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
+    font-size: 15px;
+    color: #fff;
+}
+.header{
+    width: 100%;
+    height: 50px;
+    background: #ccc;
+}
+.header .con{
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.header .con li{
+    margin-right: 15px;
+}
+.header .con li:nth-of-type(3){
+    margin-right: 5px;
+}
+.header .con li:nth-of-type(4){
+    margin-right: 5px;
+}
+main{
+    width: 100%;
+    height: auto;
+}
+main .con{
+    width: 1150px;
+    height: 100%;
+    margin: 50px auto;
+    padding: 30px 25px;
+    background: #f5f5f5;
+    color: #333;
+}
+.controls{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.controls label{
+    margin: 0 20px;
+}
+.showAll{
+    width: 100%;
+    height: auto;
+    margin-top: 25px;
+}
+.showAll .tg-list-item{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+}
+.showAll .tg-list-item h4{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.delChoice{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.icon-shanchu1{
+    font-size: 26px;
+    color: red;
+    margin-right: 5px;
+}

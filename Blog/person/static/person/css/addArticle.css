@@ -1,0 +1,105 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: PingFang SC, Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+body{
+    font-family: PingFang SC,Helvetica Neue,Helvetica,Hiragino Sans GB,Microsoft YaHei,Arial,sans-serif;
+    font-size: 14px;
+}
+.all{
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+    padding-top: 25px;
+}
+.icon-fanhui{
+    position: absolute;
+    left: -80px;
+    top: 40px;
+    font-size: 45px;
+}
+.from-box{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.msg{
+    display: flex;
+    justify-content: flex-start;
+}
+.from-box .username-label .tip{
+    color: #f55845;
+    padding-right: 2px;
+}
+.username-label{
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    font-family: PingFang SC, Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+.from-box .username-label .tip{
+    color: #f55845;
+    padding-right: 2px;
+}
+.username-label .username{
+    display: block;
+    width: 280px;
+    margin-top: 5px;
+    padding: 7px 20px 7px 34px;
+    line-height: 1.5;
+    font-size: 13px;
+    border: 1px solid #dcdee2;
+    border-radius: 4px;
+    color: #515a6e;
+    background-color: #fff;
+    position: relative;
+    cursor: text;
+}
+.selects{
+    display: block;
+    width: 280px;
+    margin-top: 5px;
+    padding: 7px 20px 7px 34px;
+    line-height: 1.5;
+    font-size: 13px;
+    border: 1px solid #dcdee2;
+    border-radius: 4px;
+    color: #515a6e;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+.username-label .push{
+    display: block;
+    border: 0;
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    background: #2a8bec;
+    color: #fff;
+    font-weight: 500;
+    float: left;
+    font-size: 18px;
+
+}
+.username-label .clean{
+    display: block;
+    border: 0;
+    border-radius: 5px;
+    width: 100px;
+    height: 40px;
+    background: #1AD21B;
+    color: #fff;
+    font-weight: 500;
+    float: left;
+    margin-left: 30px;
+    font-size: 18px;
+}

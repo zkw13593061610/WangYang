@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人博客平台</title>
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_czfianf33og.css">
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "blogs/css/my_blog.css" %}">
+    <script src="{% static "blogs/js/jquery-3.2.1.js" %}"></script>
+    <script src="{% static "blogs/js/xs.js" %}"></script>
+    <style>
+        a{
+            text-decoration: none;
+        }
+        .pagination{
+            width: 860px;
+            height: 60px;
+            background: #fff;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .step-links{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .pre{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #19be6b;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .nex{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #05A6F0;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .index{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #05A6F0;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .last{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #19be6b;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .tips{
+            width: 100%;
+            height: 400px;
+        }
+        .icon-niao{
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="con">
+            <a href="{% url 'blogs:index'%}">
+               <img src="{% static "blogs/img/boke.svg" %}" alt="" class="logo">
+            </a>
+            <div class="nav-wrap">
+                <li class="nav-item xs_li_08">
+                    <a href="{% url 'blogs:index'%}" style="text-decoration: none;">首页</a>
+                </li>
+                <li class="nav-item xs_li_08">
+                    <a href="{% url 'blogs:my_blog'%}" style="text-decoration: none;color: #ef4868">优秀博文</a>
+                </li>
+                {% if email %}
+                    <li class="nav-item xs_li_08" style="text-decoration: none">
+                        <a href="{% url "person:index" %}" style="text-decoration: none">我的博客</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item xs_li_08" style="text-decoration: none">
+                    <a href="" style="text-decoration: none">留言板</a>
+                </li>
+                <li class="nav-item xs_li_08">
+                    <a href="" style="text-decoration: none">关于</a>
+                </li>
+            </div>
+            <div class="login-box">
+                {% if not email %}
+                    <a href="{% url 'verify:login'%}" class="item-text" style="text-decoration: none;color: #333">登录</a> /
+                    <a href="{% url 'verify:register' %}" class="item-text" style="text-decoration: none;color: #333">注册</a>
+                    {% else %}
+                    <span style="color: gold;margin-right: 5px">
+                        <i class="iconfont icon-celebration_party-cr" style="font-size: 22px"></i>
+                    </span><a href="" style="text-decoration: none;margin: 0 10px 0 5px">{{ uName.username }}</a>
+                    <a href="{% url 'verify:secede' %}" style="text-decoration: none;color: green">
+                        <i class="iconfont icon-yyexit" style="font-size: 22px;color: green;font-weight: 600"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content-wrap-box">
+        <div class="crumbs-nav-wrap">
+            <div class="crumbs-nav">
+                <div style="float: left">
+                   <i class="iconfont icon-dingwei"></i>
+                    <a href="{% url 'blogs:index'%}" style="text-decoration: none">首页</a>
+                </div>
+                <div style="float: left;width: 200px" >
+                    <i class="iconfont icon-12" style="float: left;margin: 0 7px"></i>
+                    <h1 style="font-size: 15px;color: #565b63;
+                            font-weight: 400;">优秀博文</h1>
+                </div>
+            </div>
+        </div>
+        <div class="learn-wrap-box ">
+            <div class="two-nav-wrap-box">
+                <div class="module-nav">
+                    <ul class="list">
+                        {% for item in category %}
+                            <li class="item xs_li_08">
+                                <a href="">{{ item.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="article-list">
+                {% for item in contacts %}
+                  <li class="article-item">
+                    <div class="news-img-box">
+                        <a href="{% url 'blogs:blog_show' item.id %}">
+                            <img src="{% static "blogs/img/girls.png" %}" alt="">
+                        </a>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="title-h3">
+                            <a href="{% url 'blogs:blog_show' item.id %}">{{ item.title }}</a>
+                        </h3>
+                        <div class="author-info">
+                            <p class="author">
+                                <a href="">
+                                   <img src="{% static "blogs/img/man.jpg" %}" alt="">
+                                    <span>{{ item.a }}</span>
+                                </a>
+                            </p>
+                            <span class="date-time">
+                                发布时间：
+                                <em>{{ item.c_time }}</em>
+                            </span>
+                            <span class="classify">
+                                分类：
+                                <a href="">{{ item.c }}</a>
+                            </span>
+
+                        </div>
+                        <p class="news-info">{{ item.con | striptags | slice:':86'}}...</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if contacts.has_previous %}
+                        <a href="?page=1" class="index">首页</a>
+                        <a href="?page={{ contacts.previous_page_number }}" class="pre">上一页</a>
+                    {% endif %}
+
+                    <span class="current">
+                        <i class="iconfont icon-dingwei"></i>第{{ contacts.number }}页   总计: {{ contacts.paginator.num_pages }}页
+                    </span>
+
+                    {% if contacts.has_next %}
+                        <a href="?page={{ contacts.next_page_number }}" class="nex">下一页</a>
+                        <a href="?page={{ contacts.paginator.num_pages }}" class="last">尾页</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+    {#  JS移入动态效果  #}
+    <script type="text/javascript">
+            $(document).ready(function() {
+            $(".xs_li_01").xs999(1);
+            $(".xs_li_02").xs999(2);
+            $(".xs_li_03").xs999(3);
+            $(".xs_li_04").xs999(4);
+            $(".xs_li_05").xs999(5);
+            $(".xs_li_06").xs999(6);
+            $(".xs_li_07").xs999(7);
+            $(".xs_li_08").xs999(8);
+            $(".xs_li_09").xs999(9);
+            $(".xs_li_10").xs999(10);
+            $(".xs_li_11").xs999(11);
+            $(".xs_li_12").xs999(12);
+            $(".xs_li_13").xs999(13);
+            $(".xs_li_14").xs999(14);
+            $(".xs_li_15").xs999(15);
+            $(".xs_li_16").xs999(16);
+            $(".xs_li_17").xs999(17);
+            $(".xs_li_18").xs999(18);
+            $(".xs_li_19").xs999(19);
+            $(".xs_li_20").xs999(20);
+            $(".xs_li_21").xs999(21);
+            $(".xs_li_22").xs999(22);
+            $(".xs_li_23").xs999(23);
+            $(".xs_li_24").xs999(24,{color:'#6ce'});
+            $(".xs_li_25").xs999(25);
+            $(".xs_li_26").xs999(26);
+            $(".xs_li_27").xs999(27);
+            $(".xs_li_28").xs999(28);
+            $(".xs_li_29").xs999(29);
+            $(".xs_li_30").xs999(30);
+	        });
+        </script>
+    {# 底部网站信息 #}
+    <div class="footer-wrap-box">
+        <div class="footer-wrap">
+            <span>Design by：雨中人</span>
+            <span>
+                <strong style="font-weight: 500;margin-left: 7px">晋ICP备18012996号-2</strong>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

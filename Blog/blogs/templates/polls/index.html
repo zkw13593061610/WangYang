@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_czfianf33og.css">
+    <title>个人博客平台</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static "blogs/css/home.css" %}">
+    <script src="{% static "blogs/js/jquery-3.2.1.js" %}"></script>
+    <script src="{% static "blogs/js/xs.js" %}"></script>
+    <style>
+        .xs_ul li { display:inline-block; font-size:20px; line-height:20px; background:#fff; margin:20px; }
+        .xs_ul li a { display:block; width:76px; text-align:center; padding:15px 30px; border:1px solid #000; }
+        .pagination{
+            width: 860px;
+            height: 60px;
+            background: #fff;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .step-links{
+            width: 35%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .pre{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #19be6b;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .nex{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #05A6F0;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .index{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #05A6F0;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .last{
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            width: 50px;
+            height: 30px;
+            background: #19be6b;
+            color: #fff;
+            border-radius: 3px;
+        }
+        .tips{
+            width: 100%;
+            height: 400px;
+        }
+        .icon-niao{
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="con">
+            <img src="{% static "blogs/img/boke.svg" %}" alt="" class="logo">
+            <div class="nav-wrap">
+                <li class="nav-item avtive xs_li_07">
+                    <a href="" style="text-decoration: none;color: #ef4868">首页</a>
+                </li>
+                <li class="nav-item xs_li_07">
+                    <a href="{% url 'blogs:my_blog'%}" style="text-decoration: none" class="myblog">优秀文章</a>
+                </li>
+                {% if statue == 2 %}
+                    <li class="nav-item xs_li_07" style="text-decoration: none">
+                        <a href="{% url "person:index" %}" style="text-decoration: none">我的博客</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item xs_li_07" style="text-decoration: none">
+                    <a href="" style="text-decoration: none">留言板</a>
+                </li>
+                <li class="nav-item xs_li_07">
+                    <a href="" style="text-decoration: none">关于我</a>
+                </li>
+            </div>
+            <div class="login-box">
+                {% if not email %}
+                    <a href="{% url 'verify:login'%}" class="item-text" style="text-decoration: none;color: #333">登录</a> /
+                    <a href="{% url 'verify:register' %}" class="item-text" style="text-decoration: none;color: #333">注册</a>
+                    {% else %}
+                    <span style="color: gold;">
+                        <i class="iconfont icon-celebration_party-cr" style="font-size: 22px"></i>
+                    </span><a href="{% url 'person:index' %}" style="text-decoration: none;margin: 0 10px 0 5px">{{ uName.username }}</a>
+                    <a href="{% url 'verify:secede' %}" style="text-decoration: none;color: green">
+                        <i class="iconfont icon-yyexit" style="font-size: 22px;color: green;font-weight: 600"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="blog-show">
+        <div class="banner-wrap">
+            <div class="banner-left">
+                <ul>
+                    <li><img src="{% static "blogs/img/banner1.jpg" %}" alt=""></li>
+                    <li><img src="{% static "blogs/img/banner3.jpg" %}" alt=""></li>
+                    <li><img src="{% static "blogs/img/banner4.jpg" %}" alt=""></li>
+                    <li><img src="{% static "blogs/img/banner5.jpg" %}" alt=""></li>
+                </ul>
+            </div>
+            <div class="banner-right">
+                <img src="{% static "blogs/img/say-bg.jpg" %}" alt="">
+                <div class="banner-right-text">
+                    有许多时候，我们不得不承认。生活，不是不寂寞，只是不想说。
+                </div>
+            </div>
+        </div>
+        <div class="con_banner">
+            <div class="column-list-box">
+                <ul class="column-list-tab">
+                    {% for item in category %}
+                        <li class="column-list-tab-item xs_li_24">
+                            <a href="javascript:;">{{ item }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="column-list-content-box">
+                    <div class="list-box">
+                        {% for item in category %}
+                            <div class="column-list-content">
+                            <div class="img-list">
+                                <a href="" class="link">
+                                    <img src="{% static "blogs/img/jide.jpg" %}" alt="一个网站的开发流程" title="一个网站的开发流程">
+                                    <h3 class="title">
+                                        <span class="text">一个网站的开发流程</span>
+                                    </h3>
+                                </a>
+                                <a href="" class="link">
+                                    <img src="{% static "blogs/img/jide.jpg" %}" alt="关于网站空间服务器的选择" title="关于网站空间服务器的选择">
+                                    <h3 class="title">
+                                        <span class="text">关于网站空间服务器的选择</span>
+                                    </h3>
+                                </a>
+                            </div>
+                            <div class="article-list">
+                                {% for it in item.all_Art %}
+                                    <a href="" class="link links">
+                                        {% if it.sort <= 2  %}
+                                            <span class="num" style="background: #333">{{ it.sort }}</span>
+                                            {% else %}
+                                            <span class="num">{{ it.sort }}</span>
+                                        {% endif %}
+                                        <h3 class="title">{{ it.title }}</h3>
+                                        <p class="info">
+                                            {{ it.con | striptags | slice:':50'}}...
+                                        </p>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="else">
+                <div class="search-wrap">
+                    <input type="text" class="search-value" placeholder="请输入你需要查找的内容">
+                    <i class="iconfont icon-search"></i>
+                </div>
+                <div class="side-nav">
+                    <ul style="padding-left: 10px;">
+                        <li class="nav-1"><a href="">关于我</a></li>
+                        <li class="nav-1"><a href="">高山流水</a></li>
+                        {% if statue == 1 %}
+                            <li class="nav-1"><a href="javaScript:;" style="color: #fff;" id="stop">审批中</a></li>
+                            {% elif statue == 2 %}
+                            <li class="nav-1"><a href="javaScript:;" style="color: #fff;" id="noJump">开通成功</a></li>
+                            {% elif statue == 0 %}
+
+                            {% else %}
+                            <li class="nav-1"><a href="{% url "blogs:kaitong" %}" style="color: #fff;">开通博客</a></li>
+                        {% endif %}
+                        <li class="nav-1"><a href="">留言板</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="left-con">
+            <div class="title-h2">
+                <span>文章推荐</span>
+            </div>
+            <div class="article-list-box">
+                {% for item in contacts %}
+                <li class="article-item">
+                    <div class="news-img-box">
+                        <a href="">
+                            <img src="{% static "blogs/img/love.jpg" %}" alt="">
+                        </a>
+                    </div>
+                    <div class="news-content">
+                        <h3 class="title-h3">
+                            <a href="{% url 'blogs:PT_blog_show' item.id %}">{{ item.title }}</a>
+                        </h3>
+                        <div class="author-info">
+                            <p class="author">
+                                <a href="">
+                                   <img src="{% static "blogs/img/boy.png" %}" alt="">
+                                    <span>{{ item.a }}</span>
+                                </a>
+                            </p>
+                            <span class="date-time">
+                                发布时间：
+                                <em>{{ item.c_time }}</em>
+                            </span>
+                            <span class="classifys">
+                                分类：
+                                <a href="" style="text-decoration: none;color: #919898">{{ item.c }}</a>
+                            </span>
+                        </div>
+                        <p class="news-info">{{ item.con | striptags | slice:':86'}}...</p>
+                    </div>
+                </li>
+                {% endfor %}
+            </div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if contacts.has_previous %}
+                        <a href="?page=1" class="index">首页</a>
+                        <a href="?page={{ contacts.previous_page_number }}" class="pre">上一页</a>
+                    {% endif %}
+
+                    <span class="current">
+                        <i class="iconfont icon-dingwei"></i>第{{ contacts.number }}页   总计: {{ contacts.paginator.num_pages }}页
+                    </span>
+
+                    {% if contacts.has_next %}
+                        <a href="?page={{ contacts.next_page_number }}" class="nex">下一页</a>
+                        <a href="?page={{ contacts.paginator.num_pages }}" class="last">尾页</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <div class="right-con">
+            <div class="title-h2">
+                <span>关注微博</span>
+            </div>
+            <div class="concern-blog">
+                <ul class="list">
+                    <li class="clearfix">
+                        <p>联系:</p>
+                        <a href="" style="color: #054CC2">
+                            <i class="iconfont icon-qq"></i>
+                            986606015
+                        </a>
+                    </li>
+                    <li class="clearfix">
+                        <p>加入群聊:</p>
+                        <a href="" style="color:#ff6700;">
+                            <i class="iconfont icon-qunfa"></i>
+                            986606015
+                        </a>
+                    </li>
+                    <li class="clearfix">
+                        <p>微信号:</p>
+                        <a href="" style="color: #82D842">
+                            <i class="iconfont icon-weixin"></i>
+                            135****1610
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="hot-recommend-wrap">
+                <h2 class="title-h2" style="margin-bottom: 0;">点击排行</h2>
+                <div class="common-list">
+                    <ul>
+                        <li class="list-item">
+                            <span class="num" style="background-color: #ff858e;">1</span>
+                            <a href="" class="link">浅谈：html5和html的区别</a>
+                        </li>
+                        <li class="list-item">
+                            <span class="num" style="background-color: #77d549;">2</span>
+                            <a href="" class="link">HTML5移动端手机网站开发流程</a>
+                        </li>
+                        <li class="list-item">
+                            <span class="num" style="background-color: #62c1ff;">3</span>
+                            <a href="" class="link">如何建立个人博客？</a>
+                        </li>
+                        <li class="list-item">
+                            <span class="num" style="">4</span>
+                            <a href="" class="link">浅谈：html5和html的区别</a>
+                        </li>
+                        <li class="list-item">
+                            <span class="num">5</span>
+                            <a href="" class="link">关于响应式布局</a>
+                        </li>
+                        <li class="list-item">
+                            <span class="num">6</span>
+                            <a href="" class="link">关于xx个人博客-3.0正式版本</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="news-guestbook">
+                <h2 class="title-h2">最新评论</h2>
+                <div class="guestbook-content">
+                    <ul class="comments-list">
+                        <li class="comments-item">
+                            <div class="comments-text-wrap">
+                                <div class="user-img">
+                                    <img src="{% static "blogs/img/user.jpg" %}" alt="">
+                                </div>
+                                <div class="comments-text-box">
+                                    <h3 class="comments-author">
+                                            昨天您好🍸
+                                    </h3>
+                                    <p class="link">
+                                        <span class="text">本人路过此地，有幸看到这个该博客，pick一下吧</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="comments-item">
+                            <div class="comments-text-wrap">
+                                <div class="user-img">
+                                    <img src="{% static "blogs/img/user.jpg" %}" alt="">
+                                </div>
+                                <div class="comments-text-box">
+                                    <h3 class="comments-author">
+                                            今天我好🍸
+                                    </h3>
+                                    <p class="link">
+                                        <span class="text">本人路过此地，有幸看到这个该博客，pick一下吧</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="comments-item">
+                            <div class="comments-text-wrap">
+                                <div class="user-img">
+                                    <img src="{% static "blogs/img/user.jpg" %}" alt="">
+                                </div>
+                                <div class="comments-text-box">
+                                    <h3 class="comments-author">
+                                            明天她好🍸
+                                    </h3>
+                                    <p class="link">
+                                        <span class="text">本人路过此地，有幸看到这个该博客，pick一下吧</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="comments-item">
+                            <div class="comments-text-wrap">
+                                <div class="user-img">
+                                    <img src="{% static "blogs/img/user.jpg" %}" alt="">
+                                </div>
+                                <div class="comments-text-box">
+                                    <h3 class="comments-author">
+                                            后天去死🍸
+                                    </h3>
+                                    <p class="link">
+                                        <span class="text">本人路过此地，有幸看到这个该博客，pick一下吧</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="link-wrap">
+                <h2 class="title-h2">
+                    友情链接
+                </h2>
+                <ul class="list">
+                    <li>
+                        <a href="https://gitee.com/">
+                            <i class="iconfont icon-mayun"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/MeetPython2018">
+                            <i class="iconfont icon-GitHub"></i>
+                            GitHub
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://youtube.com/">
+                            <i class="iconfont icon-ico-youtube"></i>
+                            油管
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+            $(document).ready(function() {
+            $(".xs_li_01").xs999(1);
+            $(".xs_li_02").xs999(2);
+            $(".xs_li_03").xs999(3);
+            $(".xs_li_04").xs999(4);
+            $(".xs_li_05").xs999(5);
+            $(".xs_li_06").xs999(6);
+            $(".xs_li_07").xs999(7);
+            $(".xs_li_08").xs999(8);
+            $(".xs_li_09").xs999(9);
+            $(".xs_li_10").xs999(10);
+            $(".xs_li_11").xs999(11);
+            $(".xs_li_12").xs999(12);
+            $(".xs_li_13").xs999(13);
+            $(".xs_li_14").xs999(14);
+            $(".xs_li_15").xs999(15);
+            $(".xs_li_16").xs999(16);
+            $(".xs_li_17").xs999(17);
+            $(".xs_li_18").xs999(18);
+            $(".xs_li_19").xs999(19);
+            $(".xs_li_20").xs999(20);
+            $(".xs_li_21").xs999(21);
+            $(".xs_li_22").xs999(22);
+            $(".xs_li_23").xs999(23);
+            $(".xs_li_24").xs999(24,{color:'#6ce'});
+            $(".xs_li_25").xs999(25);
+            $(".xs_li_26").xs999(26);
+            $(".xs_li_27").xs999(27);
+            $(".xs_li_28").xs999(28);
+            $(".xs_li_29").xs999(29);
+            $(".xs_li_30").xs999(30);
+	        });
+    </script>
+    <div class="zhegai">
+        <div class="dialog">
+            <div class="dialog-body">
+                <div class="login-wrap-box">
+                    <div class="content-box">
+                        <h2 class="title">
+                            登录个人博客
+                            <i class="iconfont icon-guanbi1" style="float: right;color: #9D9D9D;font-size: 14px"></i>
+                        </h2>
+                        <form action="" class="from-box">
+                        <label for="" class="username-label">
+                            <i class="iconfont icon-xinfeng2"></i>
+                            <span class="label">
+                                <span class="tip">*</span>
+                                电子邮箱
+                            </span>
+                            <input type="email" placeholder="请输入邮箱" class="username">
+                        </label>
+                        <label for="" class="username-label">
+                            <i class="iconfont icon-lock"></i>
+                            <span class="label">
+                                <span class="tip">*</span>
+                                密码
+                            </span>
+                            <input type="email" placeholder="请输入密码" class="username">
+                        </label>
+                        <label for="" class="username-label" style="height: 70px">
+                            <i class="iconfont icon-yanzhengma"></i>
+                            <span class="label">
+                                <span class="tip">*</span>
+                                图片验证
+                            </span><br>
+                            <a href="" class="yz"><img src="{% static "blogs/img/code.png" %}" alt=""></a>
+                            <input type="text" placeholder="请输入图片中的字符" class="username" style="width: 120px;float: right">
+                        </label>
+                    </form>
+                        <div class="btn-box">
+                            <button class="request-btn">登录</button>
+                            <div class="info">
+                                <p class="info-item" style="float: left">
+                                    没有账户?
+                                    <span class="btn">注册</span>
+                                </p>
+                                <p class="btn" style="float: right;color: #2a8bec;
+    cursor: pointer;">忘记密码</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="zhegai1">
+        <div class="dialog">
+            <div class="dialog-body">
+                <div class="login-wrap-box">
+                    <div class="content-box">
+                        <h2 class="title">
+                            注册个人博客
+                            <i class="iconfont icon-guanbi1" style="float: right;color: #9D9D9D;font-size: 14px"></i>
+                        </h2>
+                        <form action="" class="from-box">
+                        <label for="" class="username-label">
+                            <i class="iconfont icon-xinfeng2"></i>
+                            <span class="label">
+                                <span class="tip">*</span>
+                                电子邮箱
+                            </span>
+                            <input type="email" placeholder="请输入邮箱" class="username">
+                        </label>
+                            <label for="" class="username-label">
+                            <i class="iconfont icon-dunpai1"></i>
+                            <span class="label">
+                                <span class="tip">*</span>
+                                邮箱验证码
+                            </span>
+                            <input type="email" placeholder="请输入邮箱验证码" class="username">
+                                <div class="btn-send-box">
+                                    <button class="btn-send" disabled="disabled">
+                                        点击发送
+                                    </button>
+                                </div>
+                        </label>
+                        <label for="" class="username-label">
+                            <i class="iconfont icon-lock"></i>
+                            <span class="label">
+                                <span class="tip">*</span>
+                                密码
+                            </span>
+                            <input type="email" placeholder="请输入密码" class="username">
+                        </label>
+                    </form>
+                        <div class="btn-box">
+                            <button class="request-btn">注册</button>
+                            <div class="info">
+                                <p class="info-item" style="float: left">
+                                    已有账户?
+                                    <span class="btn">登录</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-wrap-box">
+        <div class="footer-wrap">
+            <span>Design by：雨中人</span>
+            <span>
+                <strong style="font-weight: 500;margin-left: 7px">晋ICP备18012996号-2</strong>
+            </span>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    let t=setInterval(move,3500)
+    let ban=document.querySelectorAll('.banner-left li img')
+    let index=0
+    function move() {
+        index++
+        if (index==ban.length){
+            index = 0
+        }
+        $('.banner-left li img').hide()
+        $('.banner-left li img').eq(index).fadeTo("slow",0.85)
+    }
+    $('.column-list-content-box .list-box .column-list-content .article-list .link').mouseenter(function () {
+        $(this).find('.info').show()
+        $(this).find('.num').css('background','#333')
+        $(this).css({
+            background: '#f7f7f7',
+            padding: '10px 15px 5px'
+        })
+    })
+    $('.column-list-content-box .list-box .column-list-content .article-list .link').mouseleave(function () {
+        $(this).find('.info').hide()
+        $(this).find('.num').css('background','#9a9a9a')
+        $(this).css({
+            background: '#fff',
+            padding: '0 0 0 15px'
+        })
+    })
+    // 博客轮播
+    $('.column-list-tab-item').click(function () {
+        let index=$(this).index()
+        $('.list-box').css({
+            WebkitTransform: `translate(${-840*index}px)`,
+        })
+        $('.column-list-tab-item').css('border-bottom','0')
+        $('.column-list-tab-item').eq(index).css('border-bottom','2px solid #6D6D6D')
+    })
+    $('.img-list .link').mouseenter(function () {
+        $(this).find('img').css({
+            transform: 'scale(1.05)',
+            transition: 'all 0.5s',
+
+        })
+    })
+    $('.img-list .link').mouseleave(function () {
+        $(this).find('img').css({
+            transform: 'scale(1)',
+            transition: 'all 0.5s',
+        })
+    })
+    $("#noJump").click(function () {
+        alert("博客已开通，请勿重复操作！")
+    })
+    $("#stop").click(function () {
+        alert("开通请求审批中...")
+    })
+</script>

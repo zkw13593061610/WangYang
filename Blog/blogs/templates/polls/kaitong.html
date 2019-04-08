@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_4b4dczq7dbm.css">
+    <link rel="stylesheet" href="{% static "verify/css/home.css" %}">
+    <script src="{% static "verify/js/jquery-3.2.1.js" %}"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .from-box{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        .welNewBoy{
+            width: 600px;
+            height: auto;
+            overflow: hidden;
+            margin: 5px auto 0;
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+        }
+        .username-label .username{
+            width: 420px;
+            outline-color: #05A6F0;
+        }
+        .username-label:nth-of-type(5) .username{
+            height: 120px;
+        }
+        .btn-box{
+            width: 220px;
+            margin: 15px auto;
+        }
+        .icon-gongsi{
+            position: absolute;
+            left: 10px;
+            top: 32px;
+            font-size: 20px;
+            z-index: 1000;
+        }
+        .icon-zhiwei{
+            position: absolute;
+            left: 8px;
+            top: 32px;
+            font-size: 22px;
+            z-index: 1000;
+        }
+        .icon-aihao{
+            position: absolute;
+            left: 5px;
+            top: 27px;
+            font-size: 29px;
+            z-index: 1000;
+        }
+        .icon-xingming{
+            position: absolute;
+            left: 10px;
+            top: 35px;
+            font-size: 17px;
+            z-index: 1000;
+        }
+        .icon-yiwen{
+            position: absolute;
+            left: 8px;
+            top: 32px;
+            font-size: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div class="welNewBoy">
+    <h2 style="text-align: center">欢迎<span></span>开通本博客系统</h2>
+    <form action="" class="from-box" method="post">
+        {% csrf_token %}
+        {{ form.u }}
+        <label for="" class="username-label">
+            <i class="iconfont icon-gongsi"></i>
+            <span class="label">
+                <span class="tip">*</span>
+                公司/单位
+            </span>
+            {{ form.company }}
+        </label>
+        <label for="" class="username-label">
+            <i class="iconfont icon-zhiwei"></i>
+            <span class="label">
+                <span class="tip">*</span>
+                职位
+            </span>
+            {{ form.position }}
+        </label>
+        <label for="" class="username-label">
+            <i class="iconfont icon-aihao"></i>
+            <span class="label">
+                <span class="tip">*</span>
+                爱好
+            </span>
+            {{ form.hobby }}
+        </label>
+        <label for="" class="username-label">
+            <i class="iconfont icon-xingming"></i>
+            <span class="label">
+                <span class="tip">*</span>
+                真实姓名
+            </span>
+            {{ form.realName }}
+        </label>
+        <label for="" class="username-label">
+            <i class="iconfont icon-yiwen"></i>
+            <span class="label">
+                <span class="tip">*</span>
+                开通理由?
+            </span>
+            {{ form.why }}
+        </label>
+        <div class="btn-box">
+            <button class="request-btn">开通</button>
+            <div class="info">
+                <p class="info-item" style="float: left">
+                    放弃?
+                    <a href="{% url 'blogs:index' %}" class="btn">返回主页</a>
+                </p>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

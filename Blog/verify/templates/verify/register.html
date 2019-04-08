@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static "blogs/img/favicon.ico" %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_961039_dvdswfswkwn.css">
+    <link rel="stylesheet" href="{% static "verify/css/home.css" %}">
+    <script src="{% static "verify/js/jquery-3.2.1.js" %}"></script>
+    <link rel="stylesheet" href="{% static "verify/css/style.css" %}">
+</head>
+<body>
+    <div class="zhegai1">
+        <div class="dialog">
+            <div class="dialog-body">
+                <div class="login-wrap-box">
+                    <div class="content-box">
+                        <h2 class="title">
+                            注册个人博客
+                            <i class="iconfont icon-guanbi1" style="float: right;color: #9D9D9D;font-size: 14px"></i>
+                        </h2>
+                        <form action="" class="from-box" method="post">
+                            {% csrf_token %}
+                            <label for="" class="username-label">
+                                <i class="iconfont icon-yonghu"></i>
+                                <span class="label">
+                                    <span class="tip">*</span>
+                                    用户名
+                                </span>
+                                {{ form.username }}
+                            </label>
+                            <label for="" class="username-label">
+                                <i class="iconfont icon-lock"></i>
+                                <span class="label">
+                                    <span class="tip">*</span>
+                                    密码
+                                </span>
+                                {{ form.password }}
+                            </label>
+                            <label for="" class="username-label">
+                                <i class="iconfont icon-xinfeng2"></i>
+                                <span class="label">
+                                    <span class="tip">*</span>
+                                    电子邮箱
+                                </span>
+                                {{ form.email }}
+                            </label>
+                            <label for="" class="username-label">
+                                <i class="iconfont icon-shouji"></i>
+                                <span class="label">
+                                    <span class="tip">*</span>
+                                    手机号
+                                </span>
+                                {{ form.tel }}
+                                <div class="btn-send-box">
+                                    <button class="btn-send" disabled="disabled">
+                                        点击发送
+                                    </button>
+                                </div>
+                            </label>
+                            <div class="btn-box">
+                                <button class="request-btn">注册</button>
+                                <div class="info">
+                                    <p class="info-item" style="float: left">
+                                        已有账户?
+                                        <a href="{% url 'verify:login' %}" class="btn">登录</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                        {% if errors %}
+                            <div class="error">
+                                {{ errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static "verify/js/three.min.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "verify/js/dat.gui.min.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "verify/js/Stats.min.js" %}"></script>
+
+    <div id="Stats-output"></div>
+
+    <div id="WebGL-output"></div>
+
+    <script src='{% static "verify/js/jquery.min.js" %}'></script>
+
+    <script src="{% static "verify/js/index.js" %}"></script>
+</body>
+</html>
